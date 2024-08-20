@@ -87,7 +87,9 @@ When running `rsync`, `-e` option can be used to feed ssh command and arguments 
 ```
 rsync -avH -e "ssh -F ./.ssh_config" default:~/results/ ./results/" 
 ```
-Above will synchronise ~/results within the vagrant vm and the ./results folder right next to the Vagrantfile.
+Above will synchronise ~/results within the vagrant vm and the ./results folder right next to the Vagrantfile. 
+
+When destroying the vagrant vm, remember to delete the .ssh_config to avoid confusion and to prompt re-generating the .ssh_config file again.
 
 #
 
