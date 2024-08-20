@@ -80,6 +80,17 @@ In general, we discourage the use of shared folders and suggest that all data ge
 After that the data may be transfered to the host, for example, using rsync.
 Using rsync is also easier to automate when qemu is used because of the network setup that qemu uses by default.
 
+One way to use rsync with vagrant is to dump the ssh config onto a file and feed that file to ssh command as an option for rsync command (or any other program that uses ssh internally)
+
+Running `vagrant ssh-config > .ssh_config` in the same directory as Vagrantfile will create a file called .ssh_config in the directory.
+When running `rsync`, `-e` option can be used to feed ssh command and arguments to establish connection with the VM. e.g.:
+```
+rsync -avH -e "ssh -F ./.ssh_config" default:~/results/ ./results/" 
+```
+Above will synchronise ~/results within the vagrant vm and the ./results folder right next to the Vagrantfile. 
+
+When destroying the vagrant vm, remember to delete the .ssh_config to avoid confusion and to prompt re-generating the .ssh_config file again.
+
 #
 
 This document is ever-evolving. Feel free to add your own contributions, clarify the points made, or insert additional content.
