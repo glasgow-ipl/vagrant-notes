@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
   config.vm.provider :libvirt do |libvirt|
     libvirt.memory=16384
     libvirt.cpus=8
-    libvirt.driver="kvm" # set to use KVM hypervisor (hardware accelerated)
+    libvirt.driver="kvm" # set to use KVM hypervisor (hardware accelerated) 
   end
 
   config.vm.provision "shell", privileged: true, inline: $PROVISION
