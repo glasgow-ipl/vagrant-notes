@@ -91,6 +91,12 @@ Above will synchronise ~/results within the vagrant vm and the ./results folder 
 
 When destroying the vagrant vm, remember to delete the .ssh_config to avoid confusion and to prompt re-generating the .ssh_config file again.
 
+
+# Known issue
+    Last updated: 2025-04-23
+    There seems to be some issues with bento/Ubuntu 22.04 and libvirt. See [github issue] (https://github.com/chef/bento/issues/1604) on this. Suggest to use (generic/Ubuntu 22.04 image)[https://portal.cloud.hashicorp.com/vagrant/discover/generic/ubuntu2204] instead.
+
+
 #
 
 This document is ever-evolving. Feel free to add your own contributions, clarify the points made, or insert additional content.
