@@ -67,6 +67,15 @@ If you have more than one vagrant provider you may need to specify the provider 
 Ryo found that you can add the following [line](https://github.com/glasgow-ipl/vagrant-notes/blob/master/Vagrantfile#L21) to the vagrantfile to force use of a specific driver and provider (e.g., qemu and libvert).
 ``libvirt.driver`` option should be set to ``kvm``.
 
+## Sharing config in multi-provider environment
+
+You can write Vagrantfile to target multiple providers. Whichever provider available/defaulted will be used without selecting explicitly as shown in above section. 
+
+Vagrantfile is just a ruby script; you can set up your own variable, e.g. `common_cpu=8` and use it in the respective provider configs. 
+
+``Vagrantfile-multi_config_example`` shows an example where virtualbox provider and libvirt provider is both set-up. 
+
+
 ## Shared Directories and moving data between the VM and the Host
     
 The provided sample Vagrantfile sets up a shared directory `/vagrant` at the VM and the directory containing the Vagrantfile `.` at the host.

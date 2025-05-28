@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+$PROVISION = <<SCRIPT
+	echo "VM Setup Completed"
+SCRIPT
+
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/ubuntu2004"
+  
+  # Uncomment the following to enable X11 forwarding
+  #config.ssh.forward_agent = true
+  #config.ssh.forward_x11 = true
+
+  common_cpu = 8
+  common_memory = 16384
+
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.memory=common_memory
+    libvirt.cpus=common_cpu
+    libvirt.driver="kvm" # set to use KVM hypervisor (hardware accelerated) 
+  end
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.cpus = common_cpu
+    # Customize the amount of memory on the VM (in MiB):
+    vb.memory = common_memory
+  end
+
+  config.vm.provision "shell", privileged: true, inline: $PROVISION
+
+end
