@@ -32,12 +32,12 @@ The following explains my motivation for using qemu over Virtualbox.
     
 For my specific usecase, using mininet within a VM to create a network topology, I found that using Virtualbox (6.1.x) creates latency variation within the mininet nodes.
 On the other hand, qemu with libvirt has shown consistent, expected, network latency with little to no deviation within the mininet nodes.
-As my work relies on accurate network RTT samples, I chose to use quemu over Virtualbox.
+As my work relies on accurate network RTT samples, I chose to use qemu over Virtualbox.
 
 I also found that sets up the VM-Host networking differently.
 Virtualbox sets up ssh access to the host machine by port forwarding port 22 on the VM to a port on the host.
 Qemu sets up a virtual network, assigns a private IP to the VM and uses that address and port 22 for secure shell access.
-This is a small quality of life feature which makes it easier to connect multiple VMs on one host without having to deal with port colision or manually dealing with port forwarding to instruct which host port should be used for which VM.
+This is a small quality of life feature which makes it easier to connect multiple VMs on one host without having to deal with port collision or manually dealing with port forwarding to instruct which host port should be used for which VM.
 
 ### Setting up Qemu and Libvirt with Vagrant
 
@@ -65,7 +65,21 @@ An example of a provisioning script is [provided](https://github.com/glasgow-ipl
 
 If you have more than one vagrant provider you may need to specify the provider when issuing using up, e.g., ``vagrant up --provider=libvirt``.
 Ryo found that you can add the following [line](https://github.com/glasgow-ipl/vagrant-notes/blob/master/Vagrantfile#L21) to the vagrantfile to force use of a specific driver and provider (e.g., qemu and libvert).
-``libvirt.driver`` option should be set to ``kvm``.
+``libvirt.driver`` option should be set to ``kvm``, which should enable hardware acceleration instead of using full-software emulation of the VM.
+This option should be used when available as software emulation is slow.
+
+## Sharing config in multi-provider environment
+
+You can write Vagrantfile to target multiple providers. Whichever provider available/defaulted will be used without selecting explicitly as shown in above section. 
+
+Vagrantfile is just a ruby script; you can set up your own variable, e.g. `common_cpu=8` and use it in the respective provider configs. 
+
+``Vagrantfile-multi_config_example`` shows an example where virtualbox provider and libvirt provider is both set-up. 
+
+## Vagrant+libvirt environment VM name-collision
+In a shared-machine context, vagrant+libvirt setup can have an issue where the vms overwrite each other. The libvirt VM machine name defaults to just the directory name containing the Vagrantfile and suffix ``-default``. 
+vagrant-libvirt plugin has a way to set the prefix (https://github.com/vagrant-libvirt/vagrant-libvirt/issues/289) via ``libvirt.default_prefix`` variable. 
+The Vagrantfile examples in this repository is configured to use the unix UID and the containing directory as the prefix. 
 
 ## Shared Directories and moving data between the VM and the Host
     
