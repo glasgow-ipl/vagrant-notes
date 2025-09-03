@@ -66,6 +66,7 @@ An example of a provisioning script is [provided](https://github.com/glasgow-ipl
 If you have more than one vagrant provider you may need to specify the provider when issuing using up, e.g., ``vagrant up --provider=libvirt``.
 Ryo found that you can add the following [line](https://github.com/glasgow-ipl/vagrant-notes/blob/master/Vagrantfile#L21) to the vagrantfile to force use of a specific driver and provider (e.g., qemu and libvert).
 ``libvirt.driver`` option should be set to ``kvm``, which should enable hardware acceleration instead of using full-software emulation of the VM.
+This option should be used when available as software emulation is slow.
 
 ## Sharing config in multi-provider environment
 
